@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: "Poppins", "Inter", sans-serif;
+}
+
+.steamIcon {
+  &:hover {
+    path {
+      stroke: #077789;
+    }
+  }
+}
+
+@keyframes slider {
+  0%,
+  100% {
+    background-image: url("https://media1.tenor.com/m/XLqgLpeeEFEAAAAC/admiralbulldog-dota2.gif");
+  }
+  17% {
+    background-image: url("https://media1.tenor.com/m/P7H9T_65sUoAAAAd/fy-dota.gif");
+  }
+  34% {
+    background-image: url("https://media1.tenor.com/m/9LVLl0x7zyYAAAAC/notail.gif");
+  }
+  51% {
+    background-image: url("https://media1.tenor.com/m/UpnzHml6wj0AAAAd/capblitz-mathias-jeppesen.gif");
+  }
+  68% {
+    background-image: url("https://i.giphy.com/WUCLUev3WeB1fewFQG.webp");
+  }
+  85% {
+    background-image: url("https://i.giphy.com/TfibLw5Hr3nXGiuEoG.webp");
+  }
+}
+.bg-image {
+  animation: slider 10s infinite ease-in-out;
+  background-size: cover;
+  transition: bg-image 2s; /* Add a transition for smoother image changes */
+  /* Add other necessary styles */
+}
