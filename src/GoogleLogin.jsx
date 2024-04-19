@@ -2,7 +2,6 @@ import React from "react";
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { GoogleLogin as Google } from "@react-oauth/google";
 
 function GoogleLogin({ buttonText }) {
   const navigate = useNavigate();
@@ -47,7 +46,6 @@ function GoogleLogin({ buttonText }) {
       <button variant="primary" onClick={() => loginWithGoogle()}>
         {buttonText}
       </button>
-      
     </>
   );
 }

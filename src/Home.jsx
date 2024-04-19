@@ -2,16 +2,26 @@ import Footer from "./Footer";
 import Navbar from "./Navbar";
 import React, { useState, useEffect } from "react";
 import { GiQuickMan, GiSharpAxe } from "react-icons/gi";
+import { IoLogInOutline } from "react-icons/io5";
 
 export function Home() {
+  const [items, setItems] = useState("");
+
+  useEffect(() => {
+    const items = localStorage.getItem("token");
+    if (items) {
+      setItems(items);
+    }
+  }, []);
+
+  console.log("home screen token", items);
   return (
     <div className="flex flex-col items-center text-center justify-center bg-image h-full min-h-screen">
       <div className="  w-full h-full flex flex-col items-center text-center justify-center">
         <Navbar />
-        <div class="bg-black/50  flex flex-col rounded-xl shadow-lg p-8 md:p-10 space-y-4 backdrop-blur-sm my-64">
-          <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight text-white">
-            Welcome to{" "}
-            <span class="flex  text-red-500 font-bold text-center justify-center">
+        <div class="bg-black/50  flex flex-col rounded-xl shadow-lg p-8 md:p-10 space-y-4 backdrop-blur-lg my-64">
+          <h1 class="text-6xl font-bold tracking-tight leading-tight text-white">
+            <span class="flex  text-red-500 font-bold text-center justify-center items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-16 w-16 mr-2 fill-current hover:text-primary hover:scale-110"
@@ -28,22 +38,36 @@ export function Home() {
             </span>
           </h1>
 
-          <p class="text-lg md:text-xl font-normal text-white px-4 md:px-8">
+          <p class="text-lg  font-normal text-white px-4 md:px-8">
             Your go-to hub for discovering intriguing facts about your favorite
             items and heroes.
           </p>
           <div className="flex gap-5 items-center justify-center ">
             <a href="/heroes">
-              <div className="flex items-center text font-semibold p-2 px-2 text-white cursor-pointer rounded-lg   hover:bg-black hover:border hover:text-black">
-                <GiQuickMan size={30} color={"white"} />
+              <div className="flex items-center text font-semibold p-2 px-2 text-white cursor-pointer rounded-lg   hover:bg-white  hover:text-black">
+                <GiQuickMan size={30} />
               </div>
             </a>
             <a href="/items">
-              <div className="flex items-center text font-semibold p-2 px-2 text-white cursor-pointer rounded-lg   hover:bg-black hover:border hover:text-black">
-                <GiSharpAxe size={30} color={"white"} />
+              <div className="flex items-center text font-semibold p-2 px-2 text-white cursor-pointer rounded-lg hover:bg-white hover:text-black">
+                <GiSharpAxe size={30} />
               </div>
             </a>
           </div>
+          {!items && (
+            <div>
+              <p class="text-lg font-normal text-white px-4 md:px-8">
+                Login to access contents.
+              </p>
+              <div className="flex flex-col gap-5 items-center justify-center ">
+                <a href="/heroes">
+                  <div className="flex items-center justify-center text font-semibold p-2 px-2 text-white cursor-pointer rounded-lg   hover:bg-white hover:text-black">
+                    <IoLogInOutline size={30} />
+                  </div>
+                </a>
+              </div>
+            </div>
+          )}
         </div>
         <Footer />
       </div>

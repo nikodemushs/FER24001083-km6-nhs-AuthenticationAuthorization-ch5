@@ -5,13 +5,16 @@ import Footer from "./Footer";
 import { MdOutlineEmail } from "react-icons/md";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { FaGoogle } from "react-icons/fa";
-
 import { PiEyeLight, PiEyeSlashLight } from "react-icons/pi";
+import { FaFacebookF } from "react-icons/fa6";
+import { FcGoogle } from "react-icons/fc";
+
 import Navbar from "./Navbar";
 import { useNavigate } from "react-router-dom";
 import GoogleLogin from "./GoogleLogin";
 import { jwtDecode } from "jwt-decode";
 import { GoogleLogin as Google } from "@react-oauth/google";
+import Facebook from "./FacebookLogin";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -90,10 +93,12 @@ export default function Login() {
     <div className="flex flex-col items-center text-center justify-center bg-image h-full min-h-screen">
       <div className="  w-full h-full flex flex-col items-center text-center justify-center">
         <Navbar />
-        <div class="bg-black/50  flex flex-col rounded-xl shadow-lg p-8 md:p-10 space-y-4 backdrop-blur-sm my-64">
-          <div class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight text-white">
+        <div className="bg-black/50  flex flex-col rounded-xl shadow-lg p-8 md:p-10 space-y-4 backdrop-blur-lg my-64">
+          <div className="text-5xl  font-bold tracking-tight leading-tight text-white relative">
             Login
+            <div></div>
           </div>
+
           <div>
             <form
               onSubmit={handleSubmit}
@@ -138,60 +143,63 @@ export default function Login() {
                   </button>
                 </div>
               </div>
-              <div className="flex gap-x-5 text-lg font-bold pt-5">
+              <div className="flex flex-col gap-5 mt-5 items-center">
                 <button
                   type="submit"
-                  className="w-32 border-2 border-gray-300 rounded-lg p-2 bg-black text-white hover:bg-white hover:text-black font-xl"
+                  className="flex border-2 font-semibold items-center justify-center w-96 h-10 border-gray-300 rounded-lg p-2 bg-white text-black hover:bg-gray-300 hover:text-black font-xl"
                 >
                   Login
                 </button>
+              </div>
+
+              <div className="flex flex-col gap-5 mt-5 items-center">
+                <div className="flex font-semibold items-center text-center relative">
+                  <div className="border border-white flex-grow mr-2 w-40"></div>
+                  <div className="text-white font-semibold">Or</div>
+                  <div className="border border-white flex-grow ml-2 w-40"></div>
+                </div>
                 <div
                   onClick={(e) => {
                     e.preventDefault();
-                    setShowPassword(!showPassword);
                   }}
-                  className=" flex items-center text-center w-56 border-2 border-gray-300 rounded-lg p-2 bg-black text-white hover:bg-white hover:text-black font-xl"
+                  className=" flex border-2 font-semibold items-center justify-center text-center w-96  border-gray-300 rounded-lg p-2 bg-white text-black hover:bg-gray-300 hover:text-black font-xl"
                 >
-                  <div className="mr-3 ml-2">
-                    <FaGoogle />
+                  <div className="mr-5">
+                    <FcGoogle size={20} />
                   </div>
                   <GoogleLogin buttonText="Login with Google" />
                 </div>
-              </div>
-              <div className="pt-5">
-                <Google
-                  onSuccess={(credentialResponse) => {
-                    localStorage.setItem(
-                      "token",
-                      credentialResponse.credential
-                    );
-                    localStorage.setItem("login", "google component");
-                    navigate("/", {
-                      state: { token: credentialResponse.credential },
-                    });
+                <div
+                  onClick={(e) => {
+                    e.preventDefault();
                   }}
-                  onError={() => {
-                    console.log("Login Failed");
-                  }}
-                />
+                  className=" flex font-semibold items-center justify-center text-center w-96   rounded-lg p-2 bg-[#4267b2] text-white hover:bg-blue-700 hover:text-white font-xl"
+                >
+                  <div className="mr-5">
+                    <FaFacebookF size={20} />
+                  </div>
+                  <Facebook buttonText="Login with Facebook" />
+                </div>
               </div>
-              <span class="block  text-white sm:text-center mt-5 ">
+              <span class="block  text-white sm:text-center mt-5 font-semibold ">
                 Dont have an account?{" "}
-                <a href="/register" class="hover:underline">
-                  Register
+                <a
+                  href="/register"
+                  class="hover:underline  text-blue-400 hover:text-blue-500"
+                >
+                  Register Here.
                 </a>
                 {"   "}
-                Here.
               </span>
             </form>
           </div>
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center font-semibold">
             {message && (
               <p
                 className={`text-lg ${
                   message.includes("successful")
-                    ? "text-green-500"
-                    : "text-red-500"
+                    ? "text-green-600"
+                    : "text-red-600"
                 }`}
               >
                 {message}

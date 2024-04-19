@@ -3,7 +3,11 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
-import { IoChevronDownOutline, IoChevronUpOutline } from "react-icons/io5";
+import {
+  IoChevronDownOutline,
+  IoChevronUpOutline,
+  IoLogOutOutline,
+} from "react-icons/io5";
 
 import { jwtDecode } from "jwt-decode";
 
@@ -19,11 +23,14 @@ function Navbar() {
     if (localStorage.getItem("login") === "google component") {
       const decoded = jwtDecode(localStorage.getItem("token"));
       if (decoded?.exp < new Date() / 1000) {
-        alert("token expire");
+        // alert("token expire");
       }
       console.log("decoded", decoded);
       setData(decoded);
-    } else {
+    } else if (
+      localStorage.getItem("login") === "login" ||
+      localStorage.getItem("login") === "google function"
+    ) {
       try {
         const res = await fetch(
           "https://shy-cloud-3319.fly.dev/api/v1/auth/me",
@@ -37,15 +44,19 @@ function Navbar() {
 
         const resJson = await res?.json();
         if (res?.status === 401) {
-          alert("token expire");
+          // alert("token expire");
           return;
         }
         console.log("Data", resJson);
         setData(resJson);
       } catch (error) {
-        alert("token expire");
+        // alert("token expire");
         console.log("error ", error);
       }
+    } else if (localStorage.getItem("login") === "facebook function") {
+      const profile = localStorage.getItem("profile");
+      console.log("Data", profile);
+      setData(JSON.parse(profile)); // Parse the stored string back to an object
     }
   }
 
@@ -61,7 +72,7 @@ function Navbar() {
       getUserData();
     }
   }, [items]);
-
+  console.log("data", data);
   console.log("token", items);
 
   useEffect(() => {
@@ -89,6 +100,7 @@ function Navbar() {
     setItems("");
     navigate("/");
     setShowConfirmation(false);
+    window.location.reload();
   };
 
   const cancelLogout = () => {
@@ -143,7 +155,7 @@ function Navbar() {
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                 >
                   <CgProfile size={22} />
-                  {`${data?.data?.name || data?.name} `}
+                  {`${data?.data?.name || data?.name || data?.name} `}
                   {isDropdownOpen ? (
                     <IoChevronUpOutline size={22} />
                   ) : (
@@ -151,12 +163,13 @@ function Navbar() {
                   )}
                 </div>
                 {isDropdownOpen && (
-                  <div className="absolute top-full mt-1 right-0 font-semibold bg-white rounded-lg shadow-lg hover:scale-105">
+                  <div className=" absolute top-full mt-1 right-0 font-semibold bg-white rounded-lg shadow-lg hover:scale-105">
                     <p
                       onClick={handleLogout}
-                      className="block p-1 px-4 text font-semibold text- text-gray-700 hover:bg-gray-300 cursor-pointer rounded-lg hover:text-primary"
+                      className="flex  items-center gap-2  p-1 px-2  font-semibold text- text-gray-700 hover:bg-gray-300 cursor-pointer rounded-lg hover:text-primary"
                     >
                       Logout
+                      <IoLogOutOutline size={22} />
                     </p>
                   </div>
                 )}
